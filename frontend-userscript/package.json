@@ -1,0 +1,19 @@
+{
+  "name": "frontend-userscript",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --outfile=dist/prebid.user.js --format=iife --target=es2018",
+    "watch": "npm run build -- --watch",
+     "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/tampermonkey": "^5.0.5",
+    "esbuild": "^0.27.1",
+    "typescript": "^5.9.3"
+  }
+}
