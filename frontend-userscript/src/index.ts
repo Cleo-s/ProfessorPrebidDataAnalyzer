@@ -10,8 +10,12 @@
 // @grant        none
 // ==/UserScript==
 
+import { initPanel } from "./ui/panel";
+
 function test(): string {
     return '[Prebid Analyzer] userscript loaded';
+
+    initPanel();
 }
 
 console.log(test());

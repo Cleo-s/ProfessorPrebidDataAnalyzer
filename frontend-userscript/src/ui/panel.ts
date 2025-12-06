@@ -1,6 +1,6 @@
 import { injectStyles } from './styles';
 
-function initPanel(): string {
+export function initPanel(): HTMLElement {
     injectStyles();
 
     const isBtnPresent = document.getElementById('prebid-analyzer-button') as HTMLButtonElement;
@@ -11,7 +11,8 @@ function initPanel(): string {
     const mainDiv = document.createElement('div') as HTMLDivElement;
     const panelSection = document.createElement('section') as HTMLTableSectionElement;
     const responseInfo = document.createElement('div') as HTMLDivElement;
-    
+    const analyzeBtn = document.createElement('button') as HTMLButtonElement;
+
     if (!isDivPresent) {
         mainDiv.classList.add('prebid-analyzer-div');
         document.body.appendChild(mainDiv);
@@ -23,12 +24,12 @@ function initPanel(): string {
     }
     
     if (!isBtnPresent) { 
-        const analyzeBtn = document.createElement('button') as HTMLButtonElement;
     
         analyzeBtn.textContent = 'Провести Аналіз Данних';
         analyzeBtn.classList.add('prebid-analyzer-button');
         analyzeBtn.addEventListener('click', () => {
             console.log('Button exists!');
+            responseInfo.textContent = 'Analyzing...';
         });
 
         panelSection.appendChild(analyzeBtn);
@@ -36,8 +37,12 @@ function initPanel(): string {
 
     if (!isResponseDivPresent) {
         responseInfo.classList.add('prebid-analyzer-response-div');
+        
+        responseInfo.textContent = 'Waiting for Analysys'
+
         panelSection.appendChild(responseInfo);
     }
 
+    return mainDiv;
 
 }
