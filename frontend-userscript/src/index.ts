@@ -15,7 +15,7 @@ import { initPanel } from "./ui/panel";
 function test(): string {
     return '[Prebid Analyzer] userscript loaded';
 
-    initPanel();
 }
 
+initPanel();
 console.log(test());

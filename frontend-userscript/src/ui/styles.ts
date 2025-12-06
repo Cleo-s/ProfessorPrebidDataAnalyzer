@@ -1,4 +1,30 @@
 const PREBID_ANALYZER_CSS = `
+
+.prebid-analyzer-div {
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: fixed;
+    right: 25px;
+    top: 25px;
+
+    border: 1px solid transparent;
+    border-radius: 2px;
+
+    background-color: rgba(255, 255, 255, 0.6);
+
+    height: 500px;
+    width: 500px;
+
+    z-index: 999;
+
+    overflow: auto;
+
+    gap: 24px;
+}
+
 .prebid-analyzer-button {
     display: flex;
     align-items: center;
@@ -6,10 +32,6 @@ const PREBID_ANALYZER_CSS = `
 
     border: 1px solid black;
     border-radius: 2px;
-
-    position: fixed;
-    bottom: 100px;
-    right: 150px;
 
     z-index: 999;
 
@@ -23,27 +45,19 @@ const PREBID_ANALYZER_CSS = `
     background-color: rgba(25, 31, 52, 0.4);
 }
 
-.prebid-analyzer-panel {
-    display: flex; 
-    flex-direction: column;
+.prebid-analyzer-response-div {
+    display: flex;
     align-items: center;
     justify-content: center;
 
-    position: fixed;
-    right: 250px;
-    bottom: 200px;
+    height: 400px;
+    width: 400px;
 
-    border: 1px solid transparent;
-    border-radius: 2px;
-
-    background-color: (255, 255, 255, 0.6);
-
-    max-height: 500px;
-    overflow: auto;
-
-    gap: 24px;
+    z-index: 999;
 }
-`
+
+`;
+
 
 let style: HTMLStyleElement;
 

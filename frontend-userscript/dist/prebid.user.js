@@ -2,6 +2,32 @@
 (() => {
   // src/ui/styles.ts
   var PREBID_ANALYZER_CSS = `
+
+.prebid-analyzer-div {
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: fixed;
+    right: 25px;
+    top: 25px;
+
+    border: 1px solid transparent;
+    border-radius: 2px;
+
+    background-color: rgba(255, 255, 255, 0.6);
+
+    height: 500px;
+    width: 500px;
+
+    z-index: 999;
+
+    overflow: auto;
+
+    gap: 24px;
+}
+
 .prebid-analyzer-button {
     display: flex;
     align-items: center;
@@ -9,10 +35,6 @@
 
     border: 1px solid black;
     border-radius: 2px;
-
-    position: fixed;
-    bottom: 100px;
-    right: 150px;
 
     z-index: 999;
 
@@ -26,26 +48,17 @@
     background-color: rgba(25, 31, 52, 0.4);
 }
 
-.prebid-analyzer-panel {
-    display: flex; 
-    flex-direction: column;
+.prebid-analyzer-response-div {
+    display: flex;
     align-items: center;
     justify-content: center;
 
-    position: fixed;
-    right: 250px;
-    bottom: 200px;
+    height: 400px;
+    width: 400px;
 
-    border: 1px solid transparent;
-    border-radius: 2px;
-
-    background-color: (255, 255, 255, 0.6);
-
-    max-height: 500px;
-    overflow: auto;
-
-    gap: 24px;
+    z-index: 999;
 }
+
 `;
   var style;
   function isStyleHere() {
@@ -68,19 +81,13 @@
     injectStyles();
     const isBtnPresent = document.getElementById("prebid-analyzer-button");
     const isDivPresent = document.getElementById("prebid-analyzer-div");
-    const isSectionPresent = document.getElementById("prebid-analyzer-section");
     const isResponseDivPresent = document.getElementById("prebid-analyzer-response-div");
     const mainDiv = document.createElement("div");
-    const panelSection = document.createElement("section");
     const responseInfo = document.createElement("div");
     const analyzeBtn = document.createElement("button");
     if (!isDivPresent) {
       mainDiv.classList.add("prebid-analyzer-div");
       document.body.appendChild(mainDiv);
-    }
-    if (!isSectionPresent) {
-      panelSection.classList.add("prebid-analyzer-section");
-      mainDiv.appendChild(panelSection);
     }
     if (!isBtnPresent) {
       analyzeBtn.textContent = "\u041F\u0440\u043E\u0432\u0435\u0441\u0442\u0438 \u0410\u043D\u0430\u043B\u0456\u0437 \u0414\u0430\u043D\u043D\u0438\u0445";
@@ -89,12 +96,12 @@
         console.log("Button exists!");
         responseInfo.textContent = "Analyzing...";
       });
-      panelSection.appendChild(analyzeBtn);
+      mainDiv.appendChild(analyzeBtn);
     }
     if (!isResponseDivPresent) {
       responseInfo.classList.add("prebid-analyzer-response-div");
       responseInfo.textContent = "Waiting for Analysys";
-      panelSection.appendChild(responseInfo);
+      mainDiv.appendChild(responseInfo);
     }
     return mainDiv;
   }
