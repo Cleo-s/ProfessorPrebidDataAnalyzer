@@ -65,7 +65,7 @@ function isStyleHere(): HTMLStyleElement {
     style = document.getElementById('prebid-analyzer-styles') as HTMLStyleElement;
 
     if (!style) {
-        style = document.createElement('style');
+        style = document.createElement('style') as HTMLStyleElement;
         style.id = 'prebid-analyzer-styles';
         document.head.appendChild(style);
     }
