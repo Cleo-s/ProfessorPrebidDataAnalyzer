@@ -6,7 +6,7 @@
 // @namespace    https://github.com/Cleo-s
 // @homepageURL  https://github.com/Cleo-s
 // @match        *://*/*
-// @run-at       document-idle
+// @run-at       document-end
 // @grant        none
 // ==/UserScript==
 

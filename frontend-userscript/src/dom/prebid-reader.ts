@@ -1,7 +1,6 @@
 import { PrebidLog, PrebidSnap, PageMeta } from "../types";
 
 export function prebidDataCollector(): PrebidSnap {
-    const prebidInfoResponse = window.pbjs.getBidResponses();
 
     const prebidLogs: PrebidLog = {text: '[STUB] Professor data collection not implemented yet'};
     const metaData: PageMeta = {

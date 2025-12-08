@@ -2,7 +2,6 @@ import { injectStyles } from './styles';
 import { prebidDataCollector } from '../dom/prebid-reader';
 import { ids } from '../data/ids';
 
-
 export function initPanel(): HTMLElement {
     injectStyles();
 
