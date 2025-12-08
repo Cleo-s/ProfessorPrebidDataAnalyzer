@@ -1,35 +1,40 @@
 import { injectStyles } from './styles';
+import { prebidDataCollector } from '../dom/prebid-reader';
+import { ids } from '../data/ids';
+
 
 export function initPanel(): HTMLElement {
     injectStyles();
 
-    const isBtnPresent = document.getElementById('prebid-analyzer-button') as HTMLButtonElement;
-    const isDivPresent = document.getElementById('prebid-analyzer-div') as HTMLDialogElement;
-    const isResponseDivPresent = document.getElementById('prebid-analyzer-response-div') as HTMLDivElement;
+    const isBtnPresent = document.getElementById(ids.prebidAnalyzerButton) as HTMLButtonElement;
+    const isDivPresent = document.getElementById(ids.prebidAnalyzerDiv) as HTMLDialogElement;
+    const isResponseDivPresent = document.getElementById(ids.prebidAnalyzerResponsiveDiv) as HTMLDivElement;
 
     const mainDiv = document.createElement('div') as HTMLDivElement;
     const responseInfo = document.createElement('div') as HTMLDivElement;
     const analyzeBtn = document.createElement('button') as HTMLButtonElement;
 
     if (!isDivPresent) {
-        mainDiv.classList.add('prebid-analyzer-div');
+        mainDiv.classList.add(ids.prebidAnalyzerDiv);
         document.body.appendChild(mainDiv);
-    }
+    } 
     
     if (!isBtnPresent) { 
-    
         analyzeBtn.textContent = 'Провести Аналіз Данних';
-        analyzeBtn.classList.add('prebid-analyzer-button');
+        analyzeBtn.classList.add(ids.prebidAnalyzerButton);
         analyzeBtn.addEventListener('click', () => {
             console.log('Button exists!');
-            responseInfo.textContent = 'Analyzing...';
+            responseInfo.textContent = 'Collecting Prebid Data...';
+
+            const snapShot = prebidDataCollector();
+            responseInfo.textContent = JSON.stringify(snapShot);
         });
 
         mainDiv.appendChild(analyzeBtn);
-    }
-
+    } 
+    
     if (!isResponseDivPresent) {
-        responseInfo.classList.add('prebid-analyzer-response-div');
+        responseInfo.classList.add(ids.prebidAnalyzerResponsiveDiv);
         
         responseInfo.textContent = 'Waiting for Analysys'
 
@@ -37,5 +42,4 @@ export function initPanel(): HTMLElement {
     }
 
     return mainDiv;
-
 }

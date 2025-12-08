@@ -10,8 +10,8 @@
     justify-content: center;
 
     position: fixed;
-    right: 25px;
-    top: 25px;
+    bottom: 25px;
+    left: 25px;
 
     border: 1px solid transparent;
     border-radius: 2px;
@@ -72,34 +72,61 @@
   }
   function injectStyles() {
     const styleEl = isStyleHere();
-    if (!styleEl.textContent)
+    if (!styleEl.textContent) {
       styleEl.textContent = PREBID_ANALYZER_CSS;
+    }
   }
+
+  // src/dom/prebid-reader.ts
+  function prebidDataCollector() {
+    const prebidRoot = document.getElementById("professor_prebid-root");
+    console.log(prebidRoot);
+    const shadowRoot = prebidRoot == null ? void 0 : prebidRoot.shadowRoot;
+    shadowRoot;
+    console.log(shadowRoot);
+    const prebidLogs = { text: "[STUB] Professor data collection not implemented yet" };
+    const metaData = {
+      url: window.location.href,
+      collectedAt: (/* @__PURE__ */ new Date()).toISOString(),
+      userAgent: navigator.userAgent
+    };
+    const prebidData = { meta: metaData, logs: [prebidLogs] };
+    return prebidData;
+  }
+
+  // src/data/ids.ts
+  var ids = {
+    prebidAnalyzerButton: "prebid-analyzer-button",
+    prebidAnalyzerDiv: "prebid-analyzer-div",
+    prebidAnalyzerResponsiveDiv: "prebid-analyzer-response-div"
+  };
 
   // src/ui/panel.ts
   function initPanel() {
     injectStyles();
-    const isBtnPresent = document.getElementById("prebid-analyzer-button");
-    const isDivPresent = document.getElementById("prebid-analyzer-div");
-    const isResponseDivPresent = document.getElementById("prebid-analyzer-response-div");
+    const isBtnPresent = document.getElementById(ids.prebidAnalyzerButton);
+    const isDivPresent = document.getElementById(ids.prebidAnalyzerDiv);
+    const isResponseDivPresent = document.getElementById(ids.prebidAnalyzerResponsiveDiv);
     const mainDiv = document.createElement("div");
     const responseInfo = document.createElement("div");
     const analyzeBtn = document.createElement("button");
     if (!isDivPresent) {
-      mainDiv.classList.add("prebid-analyzer-div");
+      mainDiv.classList.add(ids.prebidAnalyzerDiv);
       document.body.appendChild(mainDiv);
     }
     if (!isBtnPresent) {
       analyzeBtn.textContent = "\u041F\u0440\u043E\u0432\u0435\u0441\u0442\u0438 \u0410\u043D\u0430\u043B\u0456\u0437 \u0414\u0430\u043D\u043D\u0438\u0445";
-      analyzeBtn.classList.add("prebid-analyzer-button");
+      analyzeBtn.classList.add(ids.prebidAnalyzerButton);
       analyzeBtn.addEventListener("click", () => {
         console.log("Button exists!");
-        responseInfo.textContent = "Analyzing...";
+        responseInfo.textContent = "Collecting Prebid Data...";
+        const snapShot = prebidDataCollector();
+        responseInfo.textContent = JSON.stringify(snapShot);
       });
       mainDiv.appendChild(analyzeBtn);
     }
     if (!isResponseDivPresent) {
-      responseInfo.classList.add("prebid-analyzer-response-div");
+      responseInfo.classList.add(ids.prebidAnalyzerResponsiveDiv);
       responseInfo.textContent = "Waiting for Analysys";
       mainDiv.appendChild(responseInfo);
     }

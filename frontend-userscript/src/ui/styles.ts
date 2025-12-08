@@ -7,8 +7,8 @@ const PREBID_ANALYZER_CSS = `
     justify-content: center;
 
     position: fixed;
-    right: 25px;
-    top: 25px;
+    bottom: 25px;
+    left: 25px;
 
     border: 1px solid transparent;
     border-radius: 2px;
@@ -76,6 +76,7 @@ function isStyleHere(): HTMLStyleElement {
 export function injectStyles() {
     const styleEl: HTMLStyleElement = isStyleHere();
 
-    if (!styleEl.textContent)
+    if (!styleEl.textContent) {
         styleEl.textContent = PREBID_ANALYZER_CSS; 
+    }
 }
