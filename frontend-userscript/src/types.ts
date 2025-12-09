@@ -25,10 +25,20 @@ export type BidderInfo = {
     issues?: string; 
 }
 
+type Size = Record<'width' | 'height', number>;
+
+type MediaTypeNameKeys = 'banner' | 'video' | 'native';
+
+export type MediaTypeName = {
+    banner?: Size[];
+    video?: Size[];
+    native?: Size[];
+}
+
 export type PrebidSnap = {
     meta: PageMeta;
     logs: PrebidLog[];
-    adUnits?: AdUnitInfo[];
-    bidders?: BidderInfo[];
+    adUnits?: AdUnitInfo;
+    bidders?: BidderInfo;
     issues?: string[];
 }

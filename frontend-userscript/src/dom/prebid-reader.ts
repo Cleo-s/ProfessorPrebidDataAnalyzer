@@ -11,7 +11,7 @@ export function prebidDataCollector(): PrebidSnap {
     }
 
     let filledAdUnit: AdUnitInfo = {code: '', bids: ['']};
-    //let filledBidderInfo: BidderInfo = {name: ''};
+    let filledBidderInfo: BidderInfo = {name: ''};
 
     adUnitsArray.forEach((adUnit) => {
         filledAdUnit.code = adUnit.code;
@@ -26,10 +26,10 @@ export function prebidDataCollector(): PrebidSnap {
     const metaData: PageMeta = {
         url: window.location.href,
         collectedAt: new Date().toISOString(),
-        userAgent: navigator.userAgent
+        userAgent: navigator.userAgent,
     };
     
-    const prebidData: PrebidSnap = {meta: metaData, logs: [prebidLogs]};
+    const prebidData: PrebidSnap = {meta: metaData, logs: [prebidLogs], adUnits: filledAdUnit};
     return prebidData;
 
 }
