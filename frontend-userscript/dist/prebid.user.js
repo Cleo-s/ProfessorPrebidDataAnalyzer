@@ -79,6 +79,19 @@
 
   // src/dom/prebid-reader.ts
   function prebidDataCollector() {
+    const adUnitsArray = window.pbjs.adUnits;
+    if (!adUnitsArray) {
+      const responseInfoDiv = document.getElementById("prebid-analyzer-response-div");
+      responseInfoDiv.textContent = "Either there is no AdUnits nor you did not launch Professor Prebid";
+    }
+    let filledAdUnit = { code: "", bidders: [""] };
+    adUnitsArray.forEach((adUnit) => {
+      filledAdUnit.code = adUnit.code;
+      filledAdUnit.sizes = adUnit.sizes;
+      filledAdUnit.bidders = adUnit.bidders;
+      filledAdUnit.mediaTypes = adUnit.mediaTypes;
+    });
+    console.log(filledAdUnit);
     const prebidLogs = { text: "[STUB] Professor data collection not implemented yet" };
     const metaData = {
       url: window.location.href,
@@ -117,13 +130,6 @@
         responseInfo.textContent = "Collecting Prebid Data...";
         const snapShot = prebidDataCollector();
         responseInfo.textContent = JSON.stringify(snapShot);
-        const prebidInfoResponse = window.pbjs.getBidResponses();
-        console.log(prebidInfoResponse);
-        const units = window.pbjs.adUnits;
-        console.log(units);
-        const rootPrebid = document.getElementById("professor_prebid-root");
-        console.log(rootPrebid);
-        console.log(rootPrebid == null ? void 0 : rootPrebid.shadowRoot);
       });
       mainDiv.appendChild(analyzeBtn);
     }

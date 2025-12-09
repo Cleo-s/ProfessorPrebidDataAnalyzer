@@ -12,10 +12,10 @@ export type PrebidLog = {
 
 export type AdUnitInfo = {
     code: string;
-    sizes?: string[];
-    mediaTypes?: string[];
-    bidders: string[];
-    issues?: string[];
+    sizes?: string[] | undefined;
+    mediaTypes?: string[] | undefined;
+    bids: string[] | undefined;
+    issues?: string[] | undefined;
 }
 
 export type BidderInfo = {
