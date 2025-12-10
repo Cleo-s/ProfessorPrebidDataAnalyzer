@@ -4,10 +4,10 @@ exports.prebidRouter = void 0;
 const express_1 = require("express");
 const openai_analyzer_1 = require("../services/openai-analyzer");
 exports.prebidRouter = (0, express_1.Router)();
-exports.prebidRouter.post('./analyze', async (req, res) => {
+exports.prebidRouter.post('/analyze', async (req, res) => {
     try {
         const snapShot = req.body;
-        if (!snapShot || !snapShot.meta || snapShot.logs) {
+        if (!snapShot || !snapShot.meta || !snapShot.logs) {
             return res.status(400).json({ error: 'Invalid snapshot payload' });
         }
         const analysis = await (0, openai_analyzer_1.analyzePrebidSnap)(snapShot);

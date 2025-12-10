@@ -1,10 +1,39 @@
 import { PageMeta, PrebidLog, AdUnitInfo, BidderInfo, PrebidSnap, PrebidAnalyzerResponse } from '../types/prebid';
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+});
 
 export async function analyzePrebidSnap(snapshot: PrebidSnap): Promise<PrebidAnalyzerResponse> {
-    const summary = `STUB analysyis for url ${snapshot.meta.url}. Logs count: ${snapshot.logs.length}`;
-    const fullRes = 'Test response from BackEnd, later here will be a complete response from OpenAI in readable text';
 
-    return { summary, fullRes, rawRes: JSON.stringify({
-        stub: true, recievedLogs: snapshot.logs.length
-    }, null, 2)}
+    const userText = JSON.stringify(snapshot);
+    const systemText = `Ти експерт з adtech, Prebid.js та header bidding. 
+    Твоє завдання — проаналізувати дані з Prebid Professor (логи та конфігурація слотів), 
+    виявити проблеми й дати рекомендації. 
+    Відповідай українською мовою. Спочатку дай коротке резюме (кілька речень), 
+    потім детальний аналіз ситуації, 
+    а наприкінці — конкретні поради, що виправити в конфігурації Prebid, bidder-ах, таймінгах, timeout-ах тощо. 
+    Загальний обсяг відповіді — приблизно 500 слів.`
+
+    if(userText.length > 8000)
+        userText.slice(0, 8000);
+
+    const response = await openai.responses.create({
+        model: 'gpt-5-nano',
+        input: [
+            {role: 'system', content: systemText},
+            {role: 'user', content: userText}
+        ],
+        reasoning: {
+            effort: 'low',
+        },
+        max_output_tokens: 2048,
+    });
+
+    const fullText = response.output_text;
+    
+    console.log(fullText);
+
+    return { summary: fullText, fullRes: fullText, rawRes: JSON.stringify(response, null, 2)};
 };
