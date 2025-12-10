@@ -4,11 +4,11 @@ import { PrebidSnap } from "../types/prebid";
 
 export const prebidRouter = Router();
 
-prebidRouter.post('./analyze', async(req: Request, res: Response) => {
+prebidRouter.post('/analyze', async (req: Request, res: Response) => {
     try {
         const snapShot = req.body as PrebidSnap;
 
-        if (!snapShot || !snapShot.meta || snapShot.logs) {
+        if (!snapShot || !snapShot.meta || !snapShot.logs) {
             return res.status(400).json({error: 'Invalid snapshot payload'});
         }
 

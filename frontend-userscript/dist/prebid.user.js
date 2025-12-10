@@ -84,11 +84,12 @@
       const responseInfoDiv = document.getElementById("prebid-analyzer-response-div");
       responseInfoDiv.textContent = "Either there is no AdUnits nor you did not launch Professor Prebid";
     }
-    let filledAdUnit = { code: "", bidders: [""] };
+    let filledAdUnit = { code: "", bids: [""] };
+    let filledBidderInfo = { name: "" };
     adUnitsArray.forEach((adUnit) => {
       filledAdUnit.code = adUnit.code;
       filledAdUnit.sizes = adUnit.sizes;
-      filledAdUnit.bidders = adUnit.bidders;
+      filledAdUnit.bids = adUnit.bids;
       filledAdUnit.mediaTypes = adUnit.mediaTypes;
     });
     console.log(filledAdUnit);
@@ -98,8 +99,31 @@
       collectedAt: (/* @__PURE__ */ new Date()).toISOString(),
       userAgent: navigator.userAgent
     };
-    const prebidData = { meta: metaData, logs: [prebidLogs] };
+    const prebidData = { meta: metaData, logs: [prebidLogs], adUnits: filledAdUnit };
     return prebidData;
+  }
+
+  // src/api/config.ts
+  var API_BASE_URL = "http://localhost:4000";
+  var PREBID_ANALYZER_PATH = "/api/prebid/analyze";
+
+  // src/api/client.ts
+  async function analyzePrebid(pSnap) {
+    const url = API_BASE_URL + PREBID_ANALYZER_PATH;
+    const reqestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(pSnap)
+    };
+    try {
+      const response = await fetch(url, reqestOptions);
+      if (!response.ok)
+        throw new Error(`Response status: ${response.status}`);
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
 
   // src/data/ids.ts
@@ -125,11 +149,17 @@
     if (!isBtnPresent) {
       analyzeBtn.textContent = "\u041F\u0440\u043E\u0432\u0435\u0441\u0442\u0438 \u0410\u043D\u0430\u043B\u0456\u0437 \u0414\u0430\u043D\u043D\u0438\u0445";
       analyzeBtn.classList.add(ids.prebidAnalyzerButton);
-      analyzeBtn.addEventListener("click", () => {
-        console.log("Button exists!");
+      analyzeBtn.addEventListener("click", async (e) => {
         responseInfo.textContent = "Collecting Prebid Data...";
         const snapShot = prebidDataCollector();
-        responseInfo.textContent = JSON.stringify(snapShot);
+        responseInfo.textContent = "Sending Data to backend analyzer...";
+        try {
+          const response = await analyzePrebid(snapShot);
+          responseInfo.textContent = "";
+          responseInfo.textContent = JSON.stringify(response, null, 2);
+        } catch (error) {
+          console.error("Error during analysis. Check backend or network", error);
+        }
       });
       mainDiv.appendChild(analyzeBtn);
     }

@@ -1,7 +1,7 @@
 import { API_BASE_URL, PREBID_ANALYZER_PATH } from "./config";
 import { PrebidSnap } from "../types"; 
 
-async function sendAnalyzeReqest(pSnap: PrebidSnap) {
+export async function analyzePrebid(pSnap: PrebidSnap) {
     const url: string = API_BASE_URL + PREBID_ANALYZER_PATH;
     const reqestOptions = {
         method: 'POST',

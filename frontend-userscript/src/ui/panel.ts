@@ -1,5 +1,6 @@
 import { injectStyles } from './styles';
 import { prebidDataCollector } from '../dom/prebid-reader';
+import { analyzePrebid} from '../api/client';
 import { ids } from '../data/ids';
 
 export function initPanel(): HTMLElement {
@@ -21,12 +22,20 @@ export function initPanel(): HTMLElement {
     if (!isBtnPresent) { 
         analyzeBtn.textContent = 'Провести Аналіз Данних';
         analyzeBtn.classList.add(ids.prebidAnalyzerButton);
-        analyzeBtn.addEventListener('click', () => {
-            console.log('Button exists!');
+        analyzeBtn.addEventListener('click', async (e) => {
             responseInfo.textContent = 'Collecting Prebid Data...';
 
             const snapShot = prebidDataCollector();
-            responseInfo.textContent = JSON.stringify(snapShot);
+            responseInfo.textContent = 'Sending Data to backend analyzer...';
+
+            try {
+                const response: Response = await analyzePrebid(snapShot);
+                responseInfo.textContent = '';
+                responseInfo.textContent = JSON.stringify(response, null, 2);
+                
+            } catch (error) {
+                console.error('Error during analysis. Check backend or network', error);
+            }
         });
 
         mainDiv.appendChild(analyzeBtn);
