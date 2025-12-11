@@ -7,15 +7,8 @@
 // @homepageURL  https://github.com/Cleo-s
 // @match        *://*/*
 // @run-at       document-end
-// @grant        none
+// @grant        unsafeWindow
 // ==/UserScript==
 
 import { initPanel } from "./ui/panel";
-
-function test(): string {
-    return '[Prebid Analyzer] userscript loaded';
-
-}
-
 initPanel();
-console.log(test());

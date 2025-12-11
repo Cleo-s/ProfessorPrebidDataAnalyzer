@@ -79,19 +79,12 @@
 
   // src/dom/prebid-reader.ts
   function prebidDataCollector() {
-    const adUnitsArray = window.pbjs.adUnits;
-    if (!adUnitsArray) {
-      const responseInfoDiv = document.getElementById("prebid-analyzer-response-div");
-      responseInfoDiv.textContent = "Either there is no AdUnits nor you did not launch Professor Prebid";
-    }
+    const possibleSolution = unsafeWindow.vmpbjs.getEvents();
+    console.log(window.pbjs);
+    console.log(unsafeWindow.pbjs);
+    console.log(possibleSolution);
     let filledAdUnit = { code: "", bids: [""] };
     let filledBidderInfo = { name: "" };
-    adUnitsArray.forEach((adUnit) => {
-      filledAdUnit.code = adUnit.code;
-      filledAdUnit.sizes = adUnit.sizes;
-      filledAdUnit.bids = adUnit.bids;
-      filledAdUnit.mediaTypes = adUnit.mediaTypes;
-    });
     console.log(filledAdUnit);
     const prebidLogs = { text: "[STUB] Professor data collection not implemented yet" };
     const metaData = {
@@ -172,9 +165,5 @@
   }
 
   // src/index.ts
-  function test() {
-    return "[Prebid Analyzer] userscript loaded";
-  }
   initPanel();
-  console.log(test());
 })();

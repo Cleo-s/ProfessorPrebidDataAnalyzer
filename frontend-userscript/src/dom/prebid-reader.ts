@@ -1,24 +1,16 @@
 import { PrebidLog, PrebidSnap, PageMeta, AdUnitInfo, BidderInfo } from "../types";
+declare const unsafeWindow: Window & typeof globalThis;
 
 
 export function prebidDataCollector(): PrebidSnap {
 
-    const adUnitsArray: AdUnitInfo[] = window.pbjs.adUnits;
-
-    if(!adUnitsArray) {
-        const responseInfoDiv = document.getElementById('prebid-analyzer-response-div') as HTMLDivElement;
-        responseInfoDiv.textContent = 'Either there is no AdUnits nor you did not launch Professor Prebid';
+    const allPbjsEntries: {} = window.pbjs.getEvents();
+    if (!allPbjsEntries) { 
+        const allVmPbjsEntries: {} = window.vmpbjs.getEvents();
     }
-
+ 
     let filledAdUnit: AdUnitInfo = {code: '', bids: ['']};
     let filledBidderInfo: BidderInfo = {name: ''};
-
-    adUnitsArray.forEach((adUnit) => {
-        filledAdUnit.code = adUnit.code;
-        filledAdUnit.sizes = adUnit.sizes;
-        filledAdUnit.bids = adUnit.bids;
-        filledAdUnit.mediaTypes = adUnit.mediaTypes;
-    });
 
     console.log(filledAdUnit);
 
