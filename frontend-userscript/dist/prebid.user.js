@@ -16,14 +16,12 @@
     border: 1px solid transparent;
     border-radius: 2px;
 
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(27, 27, 27, 0.8);
 
-    height: 500px;
-    width: 500px;
+    height: 750px;
+    width: 650px;
 
     z-index: 999;
-
-    overflow: auto;
 
     gap: 24px;
 }
@@ -41,20 +39,24 @@
     padding: 2px 4px;
     cursor: pointer;
 
-    background-color: rgba(25, 31, 52, 0.8);
+    background-color: rgba(107, 107, 107, 0.8);
 }
 
 .prebid-analyzer-button:hover {
-    background-color: rgba(25, 31, 52, 0.4);
+    background-color: rgba(107, 107, 107, 0.4);
 }
 
 .prebid-analyzer-response-div {
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow-wrap: break-word;
 
-    height: 400px;
-    width: 400px;
+    white-space: pre-line;
+    overflow-y: auto;
+
+    height: 650px;
+    width: 550px;
 
     z-index: 999;
 }
@@ -77,57 +79,133 @@
     }
   }
 
-  // src/dom/prebid-reader.ts
-  function prebidDataCollector() {
-    let allPbjsEntries = [];
-    let allVmPbjsEntries = [];
-    let bidderTimeoutArray = [];
-    let bidderErrorArray = [];
-    let noBidArray = [];
-    let bidderTimeToRespondArray = [];
-    let timeOutArray = [];
-    let adRenderDelayArray = [];
-    let wichBidWonArray = [];
-    let howMuchCpmArray = [];
-    let whoLostArray = [];
-    let creativeSizesArray = [];
-    let biddersSizesArray = [];
-    let auctionTimeOutArray = [];
-    let isGDPRPresentArray = [];
-    let addUnitsArray = [];
-    let adsFormatsArray = [];
-    let noBidObj = {};
+  // src/dom/find-prebid-data.ts
+  function getAllDataFromPBJSInstance() {
     try {
-      allPbjsEntries = unsafeWindow.pbjs.getEvents();
+      let globalDataArray = [];
+      let allPbjsEntries = [];
+      let allVmPbjsEntries = [];
+      let bidderTimeoutArray = [];
+      let bidderErrorArray = [];
+      let noBidArray = [];
+      let bidderTimeToRespondArray = [];
+      let timeOutArray = [];
+      let adRenderDelayArray = [];
+      let wichBidWonArray = [];
+      let howMuchCpmArray = [];
+      let whoLostArray = [];
+      let creativeSizesArray = [];
+      let biddersSizesArray = [];
+      let auctionTimeOutArray = [];
+      let isGDPRPresentArray = [];
+      let addUnitsArray = [];
+      let adsFormatsArray = [];
+      let noBidObj = {};
+      let bidTimeOutObj = {};
+      let bidderErrorObj = {};
+      let bidderTimeToRespond = {};
+      let renderDelay = {};
+      let auctionTimeOut = {};
+      let wonBids = {};
+      let siteRequestedSizes = {};
+      let bidderSizes = {};
+      allPbjsEntries = unsafeWindow.vmpbjs.getEvents();
       if (!allPbjsEntries) {
         allVmPbjsEntries = unsafeWindow.vmpbjs.getEvents();
       }
       allPbjsEntries.forEach((e) => {
         console.log(e);
-        if (e.eventType === "noBid") {
-          noBidArray.push(noBidObj = {
+        if (e.eventType === "bidTimeout") {
+          bidderTimeoutArray.push(bidTimeOutObj = {
             bidder: e.args.bidder,
             adUnitCode: e.args.adUnitCode,
             auctionID: e.args.auctionID
           });
         }
         ;
+        if (e.eventType === "bidderError") {
+          bidderErrorArray.push(bidderErrorObj = {
+            error: e.args.error,
+            bidderCode: e.args.bidderRequest.bidderCode,
+            adUnits: e.args.bidderRequest.adUnits,
+            bids: e.args.bidderRequest.bids
+          });
+        }
+        ;
+        if (e.eventType === "noBid") {
+          noBidArray.push(noBidObj = {
+            isNoBid: true,
+            bidder: e.args.bidder,
+            adUnitCode: e.args.adUnitCode,
+            auctionID: e.args.auctionID
+          });
+        }
+        ;
+        if (e.eventType === "bidResponse") {
+          bidderTimeToRespondArray.push(bidderTimeToRespond = {
+            timeToRespond: e.args.timeToRespond,
+            requestTimes: e.args.requestTimestamp,
+            responseTimes: e.args.responseTimestamp
+          });
+        }
+        ;
+        if (e.eventType === "auctionInit") {
+          timeOutArray.push(auctionTimeOut = {
+            bidder: e.args.bidder,
+            adUnitCode: e.args.adUnitCode,
+            auctionID: e.args.auctionId,
+            timeout: e.args.timeout
+          });
+        }
+        ;
+        if (e.eventType === "bidWon") {
+          wichBidWonArray.push(wonBids = {
+            wonBid: e.args,
+            wonBidAdUnitCode: e.args.bidder,
+            wonBidder: e.args.adUnitCode
+          });
+          howMuchCpmArray.push(wonBids = {
+            CPM: e.args.cpm,
+            currency: e.args.currency
+          });
+        }
+        ;
+        if (e.eventType === "bidResponse") {
+          biddersSizesArray.push(bidderSizes = {
+            width: e.args.width,
+            height: e.args.height
+          });
+        }
+        ;
       });
-      allVmPbjsEntries.forEach((e) => {
-        console.log(e);
-      });
+      globalDataArray = [
+        bidderTimeoutArray,
+        bidderErrorArray,
+        noBidArray,
+        bidderTimeToRespondArray,
+        timeOutArray,
+        wichBidWonArray,
+        howMuchCpmArray,
+        creativeSizesArray,
+        biddersSizesArray
+      ];
+      console.log(globalDataArray);
+      return globalDataArray;
     } catch (e) {
       console.error("Error: ", e);
     }
-    let filledAdUnit = { code: "", bids: [""] };
-    let filledBidderInfo = { name: "" };
+  }
+
+  // src/dom/prebid-reader.ts
+  function prebidDataCollector() {
     const prebidLogs = { text: "[STUB] Professor data collection not implemented yet" };
+    const allPrebidData = getAllDataFromPBJSInstance();
     const metaData = {
       url: window.location.href,
       collectedAt: (/* @__PURE__ */ new Date()).toISOString(),
       userAgent: navigator.userAgent
     };
-    const prebidData = { meta: metaData, logs: [prebidLogs], adUnits: filledAdUnit };
+    const prebidData = { meta: metaData, logs: [prebidLogs], globalData: allPrebidData };
     return prebidData;
   }
 
@@ -184,7 +262,8 @@
         try {
           const response = await analyzePrebid(snapShot);
           responseInfo.textContent = "";
-          responseInfo.textContent = JSON.stringify(response, null, 2);
+          responseInfo.textContent = response.fullRes;
+          console.log(response);
         } catch (error) {
           console.error("Error during analysis. Check backend or network", error);
         }

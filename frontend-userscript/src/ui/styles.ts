@@ -13,14 +13,12 @@ const PREBID_ANALYZER_CSS = `
     border: 1px solid transparent;
     border-radius: 2px;
 
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.9);
 
-    height: 500px;
-    width: 500px;
+    height: 750px;
+    width: 650px;
 
     z-index: 999;
-
-    overflow: auto;
 
     gap: 24px;
 }
@@ -49,9 +47,13 @@ const PREBID_ANALYZER_CSS = `
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow-wrap: break-word;
 
-    height: 400px;
-    width: 400px;
+    white-space: pre-line;
+    overflow-y: auto;
+
+    height: 650px;
+    width: 550px;
 
     z-index: 999;
 }

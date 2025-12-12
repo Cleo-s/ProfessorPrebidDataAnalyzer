@@ -7,7 +7,7 @@ const openai = new OpenAI({
 
 export async function analyzePrebidSnap(snapshot: PrebidSnap): Promise<PrebidAnalyzerResponse> {
 
-    const userText = JSON.stringify(snapshot);
+    let userText = JSON.stringify(snapshot);
     const systemText = `Ти експерт з adtech, Prebid.js та header bidding. 
     Твоє завдання — проаналізувати дані з Prebid Professor (логи та конфігурація слотів), 
     виявити проблеми й дати рекомендації. 
@@ -17,7 +17,7 @@ export async function analyzePrebidSnap(snapshot: PrebidSnap): Promise<PrebidAna
     Загальний обсяг відповіді — приблизно 500 слів.`
 
     if(userText.length > 8000)
-        userText.slice(0, 8000);
+        userText = userText.slice(0, 8000);
 
     const response = await openai.responses.create({
         model: 'gpt-5-nano',
@@ -28,12 +28,12 @@ export async function analyzePrebidSnap(snapshot: PrebidSnap): Promise<PrebidAna
         reasoning: {
             effort: 'low',
         },
-        max_output_tokens: 2048,
+        max_output_tokens: 1024,
     });
 
-    const fullText = response.output_text;
+    const fullText = response.output_text as string;
     
     console.log(fullText);
 
-    return { summary: fullText, fullRes: fullText, rawRes: JSON.stringify(response, null, 2)};
+    return { summary: '', fullRes: fullText, rawRes: JSON.stringify(response)};
 };

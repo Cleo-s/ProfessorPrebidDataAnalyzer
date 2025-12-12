@@ -38,7 +38,5 @@ export type MediaTypeName = {
 export type PrebidSnap = {
     meta: PageMeta;
     logs: PrebidLog[];
-    adUnits?: AdUnitInfo;
-    bidders?: BidderInfo;
-    issues?: string[];
+    globalData: [];
 }

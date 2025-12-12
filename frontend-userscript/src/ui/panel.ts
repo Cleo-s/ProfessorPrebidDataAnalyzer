@@ -29,9 +29,12 @@ export function initPanel(): HTMLElement {
             responseInfo.textContent = 'Sending Data to backend analyzer...';
 
             try {
-                const response: Response = await analyzePrebid(snapShot);
+                const response = await analyzePrebid(snapShot);
+                
                 responseInfo.textContent = '';
-                responseInfo.textContent = JSON.stringify(response, null, 2);
+                responseInfo.textContent = response.fullRes;
+
+                console.log(response);
                 
             } catch (error) {
                 console.error('Error during analysis. Check backend or network', error);

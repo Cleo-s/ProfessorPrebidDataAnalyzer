@@ -2,20 +2,21 @@ declare const unsafeWindow: Window & typeof globalThis;
     
 export function getAllDataFromPBJSInstance(): any {
     try {
+            let globalDataArray = [];
             let allPbjsEntries = [];
             let allVmPbjsEntries: any = [];
             
-            let bidderTimeoutArray = [];
-            let bidderErrorArray = [];
+            let bidderTimeoutArray: any = [];
+            let bidderErrorArray: any = [];
             let noBidArray: any = [];
-            let bidderTimeToRespondArray = [];
-            let timeOutArray = [];
+            let bidderTimeToRespondArray: any = [];
+            let timeOutArray: any = [];
             let adRenderDelayArray = [];
-            let wichBidWonArray = [];
-            let howMuchCpmArray = [];
+            let wichBidWonArray: any = [];
+            let howMuchCpmArray: any = [];
             let whoLostArray = [];
-            let creativeSizesArray = [];
-            let biddersSizesArray = [];
+            let creativeSizesArray: any = [];
+            let biddersSizesArray: any = [];
             let auctionTimeOutArray = [];
             let isGDPRPresentArray = [];
             let addUnitsArray = [];
@@ -34,6 +35,7 @@ export function getAllDataFromPBJSInstance(): any {
                 bidder?: string;
                 adUnitCode?: string;
                 auctionID?: string;
+                timeout?: number;
             };
 
             let bidderErrorObj: bidderErrorObjType = {};
@@ -53,10 +55,32 @@ export function getAllDataFromPBJSInstance(): any {
 
             let renderDelay: RenderDelayType = {};
             type RenderDelayType = {
-                
+
+            };
+
+            let auctionTimeOut: bidTimeoutObjType= {};
+
+            let wonBids: WonBidsObjectType = {};
+            type WonBidsObjectType = {
+                wonBid?: any;
+                wonBidder?: string;
+                wonBidAdUnitCode?: string;
+                CPM?: string | number;
+                currency?: string;
+            }
+
+            let siteRequestedSizes: siteRequestedSizesType = {};
+            type siteRequestedSizesType = {
+                sizes?: string[];
+            };
+
+            let bidderSizes: BidderSyzesType = {};
+            type BidderSyzesType = {
+                width?: number | string;
+                height?: number | string;
             }
         
-        allPbjsEntries = unsafeWindow.pbjs.getEvents(); 
+        allPbjsEntries = unsafeWindow.vmpbjs.getEvents(); 
 
         if (!allPbjsEntries) { 
             allVmPbjsEntries = unsafeWindow.vmpbjs.getEvents();
@@ -94,12 +118,53 @@ export function getAllDataFromPBJSInstance(): any {
                     responseTimes: e.args.responseTimestamp,
                 });
             };
-        });
-    
-        allVmPbjsEntries.forEach((e: any) => {
-            console.log(e);
+            if (e.eventType === 'auctionInit') {
+                timeOutArray.push(auctionTimeOut = {
+                    bidder: e.args.bidder,
+                    adUnitCode: e.args.adUnitCode,
+                    auctionID: e.args.auctionId,
+                    timeout: e.args.timeout,
+                });
+            };
+            if (e.eventType === 'bidWon') {
+                wichBidWonArray.push(wonBids = {
+                    wonBid: e.args,
+                    wonBidAdUnitCode: e.args.bidder,
+                    wonBidder: e.args.adUnitCode,                    
+                });
+                howMuchCpmArray.push(wonBids = {
+                    CPM: e.args.cpm,
+                    currency: e.args.currency,
+                });
+            };
+            // if (e.eventType === 'auctionInit') {
+            //     creativeSizesArray.push(siteRequestedSizes = {
+            //         sizes: e.args.adUnit.mediaTypes.banner.sizes,
+            //     });
+            // };
+            if (e.eventType === 'bidResponse') {
+                biddersSizesArray.push(bidderSizes = {
+                    width: e.args.width,
+                    height: e.args.height,
+                });
+            };
         });
 
+        globalDataArray = [
+            bidderTimeoutArray,
+            bidderErrorArray,
+            noBidArray,
+            bidderTimeToRespondArray,
+            timeOutArray,
+            wichBidWonArray,
+            howMuchCpmArray,
+            creativeSizesArray,
+            biddersSizesArray,
+        ];
+
+        console.log(globalDataArray);
+        
+        return globalDataArray;
     } catch (e) {
         console.error('Error: ', e);
     }
