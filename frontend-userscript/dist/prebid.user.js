@@ -79,13 +79,48 @@
 
   // src/dom/prebid-reader.ts
   function prebidDataCollector() {
-    const possibleSolution = unsafeWindow.vmpbjs.getEvents();
-    console.log(window.pbjs);
-    console.log(unsafeWindow.pbjs);
-    console.log(possibleSolution);
+    let allPbjsEntries = [];
+    let allVmPbjsEntries = [];
+    let bidderTimeoutArray = [];
+    let bidderErrorArray = [];
+    let noBidArray = [];
+    let bidderTimeToRespondArray = [];
+    let timeOutArray = [];
+    let adRenderDelayArray = [];
+    let wichBidWonArray = [];
+    let howMuchCpmArray = [];
+    let whoLostArray = [];
+    let creativeSizesArray = [];
+    let biddersSizesArray = [];
+    let auctionTimeOutArray = [];
+    let isGDPRPresentArray = [];
+    let addUnitsArray = [];
+    let adsFormatsArray = [];
+    let noBidObj = {};
+    try {
+      allPbjsEntries = unsafeWindow.pbjs.getEvents();
+      if (!allPbjsEntries) {
+        allVmPbjsEntries = unsafeWindow.vmpbjs.getEvents();
+      }
+      allPbjsEntries.forEach((e) => {
+        console.log(e);
+        if (e.eventType === "noBid") {
+          noBidArray.push(noBidObj = {
+            bidder: e.args.bidder,
+            adUnitCode: e.args.adUnitCode,
+            auctionID: e.args.auctionID
+          });
+        }
+        ;
+      });
+      allVmPbjsEntries.forEach((e) => {
+        console.log(e);
+      });
+    } catch (e) {
+      console.error("Error: ", e);
+    }
     let filledAdUnit = { code: "", bids: [""] };
     let filledBidderInfo = { name: "" };
-    console.log(filledAdUnit);
     const prebidLogs = { text: "[STUB] Professor data collection not implemented yet" };
     const metaData = {
       url: window.location.href,
