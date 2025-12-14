@@ -82,10 +82,6 @@ export function getAllDataFromPBJSInstance(): any {
         
         allPbjsEntries = unsafeWindow.vmpbjs.getEvents(); 
 
-        if (!allPbjsEntries) { 
-            allVmPbjsEntries = unsafeWindow.vmpbjs.getEvents();
-        }
-
         allPbjsEntries.forEach((e: any) => {
             console.log(e);
             if (e.eventType === 'bidTimeout') {
@@ -137,11 +133,6 @@ export function getAllDataFromPBJSInstance(): any {
                     currency: e.args.currency,
                 });
             };
-            // if (e.eventType === 'auctionInit') {
-            //     creativeSizesArray.push(siteRequestedSizes = {
-            //         sizes: e.args.adUnit.mediaTypes.banner.sizes,
-            //     });
-            // };
             if (e.eventType === 'bidResponse') {
                 biddersSizesArray.push(bidderSizes = {
                     width: e.args.width,
@@ -151,19 +142,17 @@ export function getAllDataFromPBJSInstance(): any {
         });
 
         globalDataArray = [
-            bidderTimeoutArray,
-            bidderErrorArray,
-            noBidArray,
-            bidderTimeToRespondArray,
-            timeOutArray,
-            wichBidWonArray,
-            howMuchCpmArray,
-            creativeSizesArray,
-            biddersSizesArray,
+            ...bidderTimeoutArray,
+            ...bidderErrorArray,
+            ...noBidArray,
+            ...bidderTimeToRespondArray,
+            ...timeOutArray,
+            ...wichBidWonArray,
+            ...howMuchCpmArray,
+            ...creativeSizesArray,
+            ...biddersSizesArray,
         ];
 
-        console.log(globalDataArray);
-        
         return globalDataArray;
     } catch (e) {
         console.error('Error: ', e);
