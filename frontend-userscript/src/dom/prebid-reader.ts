@@ -3,7 +3,7 @@ import { getAllDataFromPBJSInstance } from "./find-prebid-data";
 
 export function prebidDataCollector(): PrebidSnap {
 
-    const prebidLogs: PrebidLog = {text: '[STUB] Professor data collection not implemented yet'};
+    const prebidLogs: PrebidLog = {text: ''};
     const allPrebidData: any = getAllDataFromPBJSInstance();
     const metaData: PageMeta = {
         url: window.location.href,

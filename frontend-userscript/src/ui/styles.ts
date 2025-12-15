@@ -33,14 +33,17 @@ const PREBID_ANALYZER_CSS = `
 
     z-index: 999;
 
-    padding: 2px 4px;
+    padding: 8px 16px;
     cursor: pointer;
 
-    background-color: rgba(25, 31, 52, 0.8);
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+
+    background-color: rgba(200, 200, 200, 0.8);
 }
 
 .prebid-analyzer-button:hover {
-    background-color: rgba(25, 31, 52, 0.4);
+    background-color: rgba(180, 180, 180, 0.4);
 }
 
 .prebid-analyzer-response-div {
@@ -51,6 +54,9 @@ const PREBID_ANALYZER_CSS = `
 
     white-space: pre-line;
     overflow-y: auto;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
 
     height: 650px;
     width: 550px;

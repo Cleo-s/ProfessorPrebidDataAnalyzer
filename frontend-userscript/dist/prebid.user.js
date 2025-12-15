@@ -16,7 +16,7 @@
     border: 1px solid transparent;
     border-radius: 2px;
 
-    background-color: rgba(27, 27, 27, 0.8);
+    background-color: rgba(255, 255, 255, 0.9);
 
     height: 750px;
     width: 650px;
@@ -36,14 +36,17 @@
 
     z-index: 999;
 
-    padding: 2px 4px;
+    padding: 8px 16px;
     cursor: pointer;
 
-    background-color: rgba(107, 107, 107, 0.8);
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+
+    background-color: rgba(200, 200, 200, 0.8);
 }
 
 .prebid-analyzer-button:hover {
-    background-color: rgba(107, 107, 107, 0.4);
+    background-color: rgba(180, 180, 180, 0.4);
 }
 
 .prebid-analyzer-response-div {
@@ -54,6 +57,9 @@
 
     white-space: pre-line;
     overflow-y: auto;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
 
     height: 650px;
     width: 550px;
@@ -110,9 +116,6 @@
       let siteRequestedSizes = {};
       let bidderSizes = {};
       allPbjsEntries = unsafeWindow.vmpbjs.getEvents();
-      if (!allPbjsEntries) {
-        allVmPbjsEntries = unsafeWindow.vmpbjs.getEvents();
-      }
       allPbjsEntries.forEach((e) => {
         console.log(e);
         if (e.eventType === "bidTimeout") {
@@ -189,7 +192,6 @@
         creativeSizesArray,
         biddersSizesArray
       ];
-      console.log(globalDataArray);
       return globalDataArray;
     } catch (e) {
       console.error("Error: ", e);
@@ -198,7 +200,7 @@
 
   // src/dom/prebid-reader.ts
   function prebidDataCollector() {
-    const prebidLogs = { text: "[STUB] Professor data collection not implemented yet" };
+    const prebidLogs = { text: "" };
     const allPrebidData = getAllDataFromPBJSInstance();
     const metaData = {
       url: window.location.href,
@@ -252,6 +254,11 @@
       mainDiv.classList.add(ids.prebidAnalyzerDiv);
       document.body.appendChild(mainDiv);
     }
+    if (!isResponseDivPresent) {
+      responseInfo.classList.add(ids.prebidAnalyzerResponsiveDiv);
+      responseInfo.textContent = "Waiting for Analysys";
+      mainDiv.appendChild(responseInfo);
+    }
     if (!isBtnPresent) {
       analyzeBtn.textContent = "\u041F\u0440\u043E\u0432\u0435\u0441\u0442\u0438 \u0410\u043D\u0430\u043B\u0456\u0437 \u0414\u0430\u043D\u043D\u0438\u0445";
       analyzeBtn.classList.add(ids.prebidAnalyzerButton);
@@ -261,6 +268,7 @@
         responseInfo.textContent = "Sending Data to backend analyzer...";
         try {
           const response = await analyzePrebid(snapShot);
+          responseInfo.style.fontSize = "14px";
           responseInfo.textContent = "";
           responseInfo.textContent = response.fullRes;
           console.log(response);
@@ -269,11 +277,6 @@
         }
       });
       mainDiv.appendChild(analyzeBtn);
-    }
-    if (!isResponseDivPresent) {
-      responseInfo.classList.add(ids.prebidAnalyzerResponsiveDiv);
-      responseInfo.textContent = "Waiting for Analysys";
-      mainDiv.appendChild(responseInfo);
     }
     return mainDiv;
   }

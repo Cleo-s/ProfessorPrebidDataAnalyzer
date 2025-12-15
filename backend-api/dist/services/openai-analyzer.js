@@ -16,7 +16,7 @@ async function analyzePrebidSnap(snapshot) {
     Відповідай українською мовою. Спочатку дай коротке резюме (кілька речень), 
     потім детальний аналіз ситуації, 
     а наприкінці — конкретні поради, що виправити в конфігурації Prebid, bidder-ах, таймінгах, timeout-ах тощо. 
-    Загальний обсяг відповіді — приблизно 200 слів.`;
+    Загальний обсяг відповіді — приблизно 500 слів.`;
     if (userText.length > 8000)
         userText = userText.slice(0, 8000);
     const response = await openai.responses.create({

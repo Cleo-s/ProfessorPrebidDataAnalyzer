@@ -19,8 +19,17 @@ export function initPanel(): HTMLElement {
         document.body.appendChild(mainDiv);
     } 
     
+    
+    if (!isResponseDivPresent) {
+        responseInfo.classList.add(ids.prebidAnalyzerResponsiveDiv);
+        
+        responseInfo.textContent = 'Waiting for Analysys'
+        
+        mainDiv.appendChild(responseInfo);
+    }
+
     if (!isBtnPresent) { 
-        analyzeBtn.textContent = 'Провести Аналіз Данних';
+    analyzeBtn.textContent = 'Провести Аналіз Данних';
         analyzeBtn.classList.add(ids.prebidAnalyzerButton);
         analyzeBtn.addEventListener('click', async (e) => {
             responseInfo.textContent = 'Collecting Prebid Data...';
@@ -31,6 +40,7 @@ export function initPanel(): HTMLElement {
             try {
                 const response = await analyzePrebid(snapShot);
                 
+                responseInfo.style.fontSize = '14px';
                 responseInfo.textContent = '';
                 responseInfo.textContent = response.fullRes;
 
@@ -43,14 +53,6 @@ export function initPanel(): HTMLElement {
 
         mainDiv.appendChild(analyzeBtn);
     } 
-    
-    if (!isResponseDivPresent) {
-        responseInfo.classList.add(ids.prebidAnalyzerResponsiveDiv);
-        
-        responseInfo.textContent = 'Waiting for Analysys'
-
-        mainDiv.appendChild(responseInfo);
-    }
 
     return mainDiv;
 }

@@ -142,15 +142,15 @@ export function getAllDataFromPBJSInstance(): any {
         });
 
         globalDataArray = [
-            ...bidderTimeoutArray,
-            ...bidderErrorArray,
-            ...noBidArray,
-            ...bidderTimeToRespondArray,
-            ...timeOutArray,
-            ...wichBidWonArray,
-            ...howMuchCpmArray,
-            ...creativeSizesArray,
-            ...biddersSizesArray,
+            bidderTimeoutArray,
+            bidderErrorArray,
+            noBidArray,
+            bidderTimeToRespondArray,
+            timeOutArray,
+            wichBidWonArray,
+            howMuchCpmArray,
+            creativeSizesArray,
+            biddersSizesArray,
         ];
 
         return globalDataArray;
