@@ -13,13 +13,26 @@ export function initPanel(): HTMLElement {
     const mainDiv = document.createElement('div') as HTMLDivElement;
     const responseInfo = document.createElement('div') as HTMLDivElement;
     const analyzeBtn = document.createElement('button') as HTMLButtonElement;
-
+    const closeBtn = document.createElement('button') as HTMLButtonElement;
+    const closedDiv = document.createElement('div') as HTMLDivElement;
+    const openBtn = document.createElement('button') as HTMLButtonElement;
+    
     if (!isDivPresent) {
         mainDiv.classList.add(ids.prebidAnalyzerDiv);
         document.body.appendChild(mainDiv);
-    } 
+    };
     
-    
+    closeBtn.classList.add(ids.prebidCloseMainDivButton);    
+    mainDiv.appendChild(closeBtn);
+
+    closeBtn.addEventListener('click',() => {
+        mainDiv.style.display = 'none';
+        closedDiv.classList.add(ids.prebidClosedDiv);
+    });
+
+    openBtn.classList.add(ids.prebidOpenMainDivButton)
+    closedDiv.appendChild(openBtn);
+
     if (!isResponseDivPresent) {
         responseInfo.classList.add(ids.prebidAnalyzerResponsiveDiv);
         
@@ -29,7 +42,7 @@ export function initPanel(): HTMLElement {
     }
 
     if (!isBtnPresent) { 
-    analyzeBtn.textContent = 'Провести Аналіз Данних';
+    analyzeBtn.textContent = 'Провести Аналіз Даних';
         analyzeBtn.classList.add(ids.prebidAnalyzerButton);
         analyzeBtn.addEventListener('click', async (e) => {
             responseInfo.textContent = 'Collecting Prebid Data...';

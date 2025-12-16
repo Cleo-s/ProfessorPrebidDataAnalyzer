@@ -238,7 +238,10 @@
   var ids = {
     prebidAnalyzerButton: "prebid-analyzer-button",
     prebidAnalyzerDiv: "prebid-analyzer-div",
-    prebidAnalyzerResponsiveDiv: "prebid-analyzer-response-div"
+    prebidAnalyzerResponsiveDiv: "prebid-analyzer-response-div",
+    prebidCloseMainDivButton: "prebid-close-main-div-button",
+    prebidClosedDiv: "prebid-closed-div",
+    prebidOpenMainDivButton: "prebid-open-main-dib-button"
   };
 
   // src/ui/panel.ts
@@ -250,17 +253,29 @@
     const mainDiv = document.createElement("div");
     const responseInfo = document.createElement("div");
     const analyzeBtn = document.createElement("button");
+    const closeBtn = document.createElement("button");
+    const closedDiv = document.createElement("div");
+    const openBtn = document.createElement("button");
     if (!isDivPresent) {
       mainDiv.classList.add(ids.prebidAnalyzerDiv);
       document.body.appendChild(mainDiv);
     }
+    ;
+    closeBtn.classList.add(ids.prebidCloseMainDivButton);
+    mainDiv.appendChild(closeBtn);
+    closeBtn.addEventListener("click", () => {
+      mainDiv.style.display = "none";
+      closedDiv.classList.add(ids.prebidClosedDiv);
+    });
+    openBtn.classList.add(ids.prebidOpenMainDivButton);
+    closedDiv.appendChild(openBtn);
     if (!isResponseDivPresent) {
       responseInfo.classList.add(ids.prebidAnalyzerResponsiveDiv);
       responseInfo.textContent = "Waiting for Analysys";
       mainDiv.appendChild(responseInfo);
     }
     if (!isBtnPresent) {
-      analyzeBtn.textContent = "\u041F\u0440\u043E\u0432\u0435\u0441\u0442\u0438 \u0410\u043D\u0430\u043B\u0456\u0437 \u0414\u0430\u043D\u043D\u0438\u0445";
+      analyzeBtn.textContent = "\u041F\u0440\u043E\u0432\u0435\u0441\u0442\u0438 \u0410\u043D\u0430\u043B\u0456\u0437 \u0414\u0430\u043D\u0438\u0445";
       analyzeBtn.classList.add(ids.prebidAnalyzerButton);
       analyzeBtn.addEventListener("click", async (e) => {
         responseInfo.textContent = "Collecting Prebid Data...";
