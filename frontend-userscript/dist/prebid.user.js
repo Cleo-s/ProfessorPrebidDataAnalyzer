@@ -262,7 +262,7 @@
 `;
 
   // src/api/config.ts
-  var API_BASE_URL = "http://localhost:4000";
+  var API_BASE_URL = "https://prebid-analyzer.duckdns.org";
   var PREBID_ANALYZER_PATH = "/api/prebid/analyze";
 
   // src/api/client.ts

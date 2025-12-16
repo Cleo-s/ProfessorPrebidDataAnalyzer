@@ -28,7 +28,7 @@ async function analyzePrebidSnap(snapshot) {
         reasoning: {
             effort: 'low',
         },
-        max_output_tokens: 1024,
+        max_output_tokens: 2048,
     });
     const fullText = response.output_text;
     console.log(fullText);

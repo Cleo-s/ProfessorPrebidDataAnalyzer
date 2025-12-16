@@ -1,2 +1,2 @@
-export const API_BASE_URL = 'http://localhost:4000';
+export const API_BASE_URL = 'https://prebid-analyzer.duckdns.org';
 export const PREBID_ANALYZER_PATH = '/api/prebid/analyze';

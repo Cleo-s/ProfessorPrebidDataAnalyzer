@@ -28,7 +28,7 @@ export async function analyzePrebidSnap(snapshot: PrebidSnap): Promise<PrebidAna
         reasoning: {
             effort: 'low',
         },
-        max_output_tokens: 1024,
+        max_output_tokens: 2048,
     });
 
     const fullText = response.output_text as string;
