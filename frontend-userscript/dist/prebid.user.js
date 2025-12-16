@@ -1,90 +1,5 @@
 "use strict";
 (() => {
-  // src/ui/styles.ts
-  var PREBID_ANALYZER_CSS = `
-
-.prebid-analyzer-div {
-    display: flex; 
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    position: fixed;
-    bottom: 25px;
-    left: 25px;
-
-    border: 1px solid transparent;
-    border-radius: 2px;
-
-    background-color: rgba(255, 255, 255, 0.9);
-
-    height: 750px;
-    width: 650px;
-
-    z-index: 999;
-
-    gap: 24px;
-}
-
-.prebid-analyzer-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 1px solid black;
-    border-radius: 2px;
-
-    z-index: 999;
-
-    padding: 8px 16px;
-    cursor: pointer;
-
-    font-family: 'Inter', sans-serif;
-    font-size: 24px;
-
-    background-color: rgba(200, 200, 200, 0.8);
-}
-
-.prebid-analyzer-button:hover {
-    background-color: rgba(180, 180, 180, 0.4);
-}
-
-.prebid-analyzer-response-div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow-wrap: break-word;
-
-    white-space: pre-line;
-    overflow-y: auto;
-
-    font-family: 'Inter', sans-serif;
-    font-size: 24px;
-
-    height: 650px;
-    width: 550px;
-
-    z-index: 999;
-}
-
-`;
-  var style;
-  function isStyleHere() {
-    style = document.getElementById("prebid-analyzer-styles");
-    if (!style) {
-      style = document.createElement("style");
-      style.id = "prebid-analyzer-styles";
-      document.head.appendChild(style);
-    }
-    return style;
-  }
-  function injectStyles() {
-    const styleEl = isStyleHere();
-    if (!styleEl.textContent) {
-      styleEl.textContent = PREBID_ANALYZER_CSS;
-    }
-  }
-
   // src/dom/find-prebid-data.ts
   function getAllDataFromPBJSInstance() {
     try {
@@ -211,6 +126,141 @@
     return prebidData;
   }
 
+  // src/ui/styles.ts
+  var PREBID_ANALYZER_CSS = `
+
+.prebid-analyzer-div {
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+
+    border: 1px solid transparent;
+    border-radius: 2px;
+
+    background-color: rgba(255, 255, 255, 0.95);
+
+    height: 750px;
+    width: 650px;
+
+    z-index: 999;
+}
+
+.prebid-closed-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+
+    border: 1px solid transparent;
+    border-radius: 2px;
+
+    z-index: 999;
+
+    background-color: rgba(255, 255, 255, 0.95);
+
+    height: 25px;
+    width: 650px;
+}
+
+.prebid-analyzer-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid black;
+    border-radius: 2px;
+
+    z-index: 999;
+
+    padding: 8px 16px;
+    cursor: pointer;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+
+    background-color: rgba(200, 200, 200, 0.8);
+}
+
+.prebid-analyzer-button:hover {
+    background-color: rgba(180, 180, 180, 0.4);
+}
+
+.prebid-analyzer-response-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-wrap: break-word;
+
+    white-space: pre-line;
+    overflow-y: auto;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+
+    height: 650px;
+    width: 550px;
+
+    z-index: 999;
+}
+
+.prebid-close-main-div-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    left: 250px;
+
+    border: 1px solid black;
+    border-radius: 2px;
+
+    z-index: 999;
+
+    padding: 4px 8px;
+    cursor: pointer;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+
+    background-color: rgba(200, 200, 200, 0.8);
+}
+
+.prebid-close-main-div-button:hover {
+    background-color: rgba(180, 180, 180, 0.4);
+}
+
+.prebid-open-main-div-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid black;
+    border-radius: 2px;
+
+    z-index: 999;
+
+    padding: 4px 8px;
+    cursor: pointer;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+
+    background-color: rgba(200, 200, 200, 0.8);
+}
+
+.prebid-open-main-div-button:hover {
+    background-color: rgba(180, 180, 180, 0.4);
+}
+`;
+
   // src/api/config.ts
   var API_BASE_URL = "http://localhost:4000";
   var PREBID_ANALYZER_PATH = "/api/prebid/analyze";
@@ -241,12 +291,11 @@
     prebidAnalyzerResponsiveDiv: "prebid-analyzer-response-div",
     prebidCloseMainDivButton: "prebid-close-main-div-button",
     prebidClosedDiv: "prebid-closed-div",
-    prebidOpenMainDivButton: "prebid-open-main-dib-button"
+    prebidOpenMainDivButton: "prebid-open-main-div-button"
   };
 
   // src/ui/panel.ts
   function initPanel() {
-    injectStyles();
     const isBtnPresent = document.getElementById(ids.prebidAnalyzerButton);
     const isDivPresent = document.getElementById(ids.prebidAnalyzerDiv);
     const isResponseDivPresent = document.getElementById(ids.prebidAnalyzerResponsiveDiv);
@@ -256,19 +305,31 @@
     const closeBtn = document.createElement("button");
     const closedDiv = document.createElement("div");
     const openBtn = document.createElement("button");
+    const styleEl = document.createElement("style");
+    styleEl.id = "prebid-analyzer-styles";
+    styleEl.textContent = PREBID_ANALYZER_CSS;
+    document.head.appendChild(styleEl);
     if (!isDivPresent) {
       mainDiv.classList.add(ids.prebidAnalyzerDiv);
       document.body.appendChild(mainDiv);
     }
     ;
     closeBtn.classList.add(ids.prebidCloseMainDivButton);
+    closeBtn.innerHTML = "Collapse Window";
     mainDiv.appendChild(closeBtn);
+    closedDiv.classList.add(ids.prebidClosedDiv);
     closeBtn.addEventListener("click", () => {
       mainDiv.style.display = "none";
-      closedDiv.classList.add(ids.prebidClosedDiv);
+      closedDiv.style.display = "flex";
+      closedDiv.appendChild(openBtn);
+      openBtn.innerHTML = "Open Window";
+      openBtn.classList.add(ids.prebidOpenMainDivButton);
+      document.body.appendChild(closedDiv);
     });
-    openBtn.classList.add(ids.prebidOpenMainDivButton);
-    closedDiv.appendChild(openBtn);
+    openBtn.addEventListener("click", () => {
+      mainDiv.style.display = "flex";
+      closedDiv.style.display = "none";
+    });
     if (!isResponseDivPresent) {
       responseInfo.classList.add(ids.prebidAnalyzerResponsiveDiv);
       responseInfo.textContent = "Waiting for Analysys";

@@ -1,10 +1,10 @@
-import { injectStyles } from './styles';
 import { prebidDataCollector } from '../dom/prebid-reader';
+import { PREBID_ANALYZER_CSS } from './styles';
 import { analyzePrebid} from '../api/client';
 import { ids } from '../data/ids';
 
 export function initPanel(): HTMLElement {
-    injectStyles();
+    //injectStyles();
 
     const isBtnPresent = document.getElementById(ids.prebidAnalyzerButton) as HTMLButtonElement;
     const isDivPresent = document.getElementById(ids.prebidAnalyzerDiv) as HTMLDialogElement;
@@ -16,22 +16,39 @@ export function initPanel(): HTMLElement {
     const closeBtn = document.createElement('button') as HTMLButtonElement;
     const closedDiv = document.createElement('div') as HTMLDivElement;
     const openBtn = document.createElement('button') as HTMLButtonElement;
+
+    const styleEl = document.createElement('style');
+    styleEl.id = 'prebid-analyzer-styles';
+    styleEl.textContent = PREBID_ANALYZER_CSS;
+    document.head.appendChild(styleEl);
     
     if (!isDivPresent) {
         mainDiv.classList.add(ids.prebidAnalyzerDiv);
         document.body.appendChild(mainDiv);
     };
     
-    closeBtn.classList.add(ids.prebidCloseMainDivButton);    
+    closeBtn.classList.add(ids.prebidCloseMainDivButton);
+    closeBtn.innerHTML = 'Collapse Window';   
     mainDiv.appendChild(closeBtn);
-
+    
+    closedDiv.classList.add(ids.prebidClosedDiv);
+    
     closeBtn.addEventListener('click',() => {
         mainDiv.style.display = 'none';
-        closedDiv.classList.add(ids.prebidClosedDiv);
+        closedDiv.style.display = 'flex';
+        
+        closedDiv.appendChild(openBtn);
+        
+        openBtn.innerHTML = 'Open Window';
+        openBtn.classList.add(ids.prebidOpenMainDivButton)
+        
+        document.body.appendChild(closedDiv);
     });
 
-    openBtn.classList.add(ids.prebidOpenMainDivButton)
-    closedDiv.appendChild(openBtn);
+    openBtn.addEventListener('click', () => {
+        mainDiv.style.display = 'flex';
+        closedDiv.style.display = 'none';
+    })
 
     if (!isResponseDivPresent) {
         responseInfo.classList.add(ids.prebidAnalyzerResponsiveDiv);

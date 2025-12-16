@@ -4,5 +4,5 @@ export const ids = {
    prebidAnalyzerResponsiveDiv: 'prebid-analyzer-response-div',
    prebidCloseMainDivButton: 'prebid-close-main-div-button',
    prebidClosedDiv: 'prebid-closed-div',
-   prebidOpenMainDivButton: 'prebid-open-main-dib-button',
+   prebidOpenMainDivButton: 'prebid-open-main-div-button',
 }

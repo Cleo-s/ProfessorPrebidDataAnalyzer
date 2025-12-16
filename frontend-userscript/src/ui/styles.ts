@@ -1,4 +1,4 @@
-const PREBID_ANALYZER_CSS = `
+export const PREBID_ANALYZER_CSS = `
 
 .prebid-analyzer-div {
     display: flex; 
@@ -13,14 +13,32 @@ const PREBID_ANALYZER_CSS = `
     border: 1px solid transparent;
     border-radius: 2px;
 
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.95);
 
     height: 750px;
     width: 650px;
 
     z-index: 999;
+}
 
-    gap: 24px;
+.prebid-closed-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+
+    border: 1px solid transparent;
+    border-radius: 2px;
+
+    z-index: 999;
+
+    background-color: rgba(255, 255, 255, 0.95);
+
+    height: 25px;
+    width: 650px;
 }
 
 .prebid-analyzer-button {
@@ -64,27 +82,52 @@ const PREBID_ANALYZER_CSS = `
     z-index: 999;
 }
 
-`;
+.prebid-close-main-div-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+    position: relative;
+    left: 250px;
 
-let style: HTMLStyleElement;
+    border: 1px solid black;
+    border-radius: 2px;
 
-function isStyleHere(): HTMLStyleElement {
-    style = document.getElementById('prebid-analyzer-styles') as HTMLStyleElement;
+    z-index: 999;
 
-    if (!style) {
-        style = document.createElement('style') as HTMLStyleElement;
-        style.id = 'prebid-analyzer-styles';
-        document.head.appendChild(style);
-    }
+    padding: 4px 8px;
+    cursor: pointer;
 
-    return style;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+
+    background-color: rgba(200, 200, 200, 0.8);
 }
 
-export function injectStyles() {
-    const styleEl: HTMLStyleElement = isStyleHere();
-
-    if (!styleEl.textContent) {
-        styleEl.textContent = PREBID_ANALYZER_CSS; 
-    }
+.prebid-close-main-div-button:hover {
+    background-color: rgba(180, 180, 180, 0.4);
 }
+
+.prebid-open-main-div-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid black;
+    border-radius: 2px;
+
+    z-index: 999;
+
+    padding: 4px 8px;
+    cursor: pointer;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+
+    background-color: rgba(200, 200, 200, 0.8);
+}
+
+.prebid-open-main-div-button:hover {
+    background-color: rgba(180, 180, 180, 0.4);
+}
+`
