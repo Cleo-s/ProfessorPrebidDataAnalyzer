@@ -34,7 +34,7 @@ export async function analyzePrebidSnap(snapshot: PrebidSnap): Promise<PrebidAna
         reasoning: {
             effort: 'low',
         },
-        max_output_tokens: 768,
+        max_output_tokens: 300,
     });
 
     const fullText = response.output_text as string;
