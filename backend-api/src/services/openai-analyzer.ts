@@ -8,13 +8,19 @@ const openai = new OpenAI({
 export async function analyzePrebidSnap(snapshot: PrebidSnap): Promise<PrebidAnalyzerResponse> {
 
     let userText = JSON.stringify(snapshot);
-    const systemText = `Ти експерт з adtech, Prebid.js та header bidding. 
-    Твоє завдання — проаналізувати дані з Prebid Professor (логи та конфігурація слотів), 
-    виявити проблеми й дати рекомендації. 
-    Відповідай українською мовою. Спочатку детальний аналіз ситуації, 
-    а далі конкретні поради, що виправити в конфігурації Prebid, bidder-ах, таймінгах, timeout-ах тощо.
-    Кожну пораду намагайся писати у одне речення. 
-    Загальний обсяг відповіді — не більше 200 слів. important!`
+    const systemText = 
+    `Ти експерт з adtech, Prebid.js та header bidding.
+    Твоє завдання — проаналізувати дані з Prebid Professor (логи та конфігурація слотів),
+    виявити проблеми й дати рекомендації. Відповідай українською мовою.
+
+    Формат:
+    1) Короткий детальний аналіз ситуації.
+    2) Список конкретних порад (кожна порада — одне речення).
+
+    ЖОРСТКЕ ОБМЕЖЕННЯ: загальний обсяг відповіді — не більше 200 слів.
+    Якщо відповідь виходить довшою, ОБОВ’ЯЗКОВО обріж її самостійно до перших 200 слів.
+    Не додавай жодних продовжень або пояснень після цього.
+    `
 
     if(userText.length > 8000)
         userText = userText.slice(0, 8000);
@@ -28,7 +34,7 @@ export async function analyzePrebidSnap(snapshot: PrebidSnap): Promise<PrebidAna
         reasoning: {
             effort: 'low',
         },
-        max_output_tokens: 2048,
+        max_output_tokens: 768,
     });
 
     const fullText = response.output_text as string;
