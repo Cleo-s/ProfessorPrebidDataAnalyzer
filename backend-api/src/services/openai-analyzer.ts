@@ -14,7 +14,7 @@ export async function analyzePrebidSnap(snapshot: PrebidSnap): Promise<PrebidAna
     Відповідай українською мовою. Спочатку детальний аналіз ситуації, 
     а далі конкретні поради, що виправити в конфігурації Prebid, bidder-ах, таймінгах, timeout-ах тощо.
     Кожну пораду намагайся писати у одне речення. 
-    Загальний обсяг відповіді — приблизно 100 слів.`
+    Загальний обсяг відповіді — не більше 200 слів. important!`
 
     if(userText.length > 8000)
         userText = userText.slice(0, 8000);
