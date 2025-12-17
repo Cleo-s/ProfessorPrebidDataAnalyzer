@@ -33,10 +33,7 @@ export async function analyzePrebidSnap(snapshot: PrebidSnap): Promise<PrebidAna
     
     console.log(fullText);
 
-    if(fullText.length >= 500) {
-        const words: string[] = fullText.trim().split(/\s+/);
-        fullText = words.slice(0, 500).join(' ') + '...'
-    }
+    fullText = fullText.slice(0, 500);
 
     return { summary: '', fullRes: fullText, rawRes: JSON.stringify(response)};
 };
