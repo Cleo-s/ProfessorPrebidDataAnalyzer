@@ -29,9 +29,14 @@ export async function analyzePrebidSnap(snapshot: PrebidSnap): Promise<PrebidAna
         max_output_tokens: 640,
     });
 
-    const fullText = response.output_text as string;
+    let fullText = response.output_text as string;
     
     console.log(fullText);
+
+    if(fullText.length >= 500) {
+        const words: string[] = fullText.trim().split(/\s+/);
+        fullText = words.slice(0, 500).join(' ') + '...'
+    }
 
     return { summary: '', fullRes: fullText, rawRes: JSON.stringify(response)};
 };
