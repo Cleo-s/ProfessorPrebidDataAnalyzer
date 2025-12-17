@@ -133,7 +133,7 @@
     display: flex; 
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
 
     position: fixed;
     bottom: 25px;
@@ -147,7 +147,7 @@
     height: 750px;
     width: 650px;
 
-    z-index: 999;
+    z-index: 9999;
 }
 
 .prebid-closed-div {
@@ -162,7 +162,7 @@
     border: 1px solid transparent;
     border-radius: 2px;
 
-    z-index: 999;
+    z-index: 9999;
 
     background-color: rgba(255, 255, 255, 0.95);
 
@@ -178,7 +178,7 @@
     border: 1px solid black;
     border-radius: 2px;
 
-    z-index: 999;
+    z-index: 9999;
 
     padding: 8px 16px;
     cursor: pointer;
@@ -203,12 +203,12 @@
     overflow-y: auto;
 
     font-family: 'Inter', sans-serif;
-    font-size: 24px;
+    font-size: 16px;
 
-    height: 650px;
-    width: 550px;
+    height: 550px;
+    width: 600px;
 
-    z-index: 999;
+    z-index: 9999;
 }
 
 .prebid-close-main-div-button {
@@ -222,7 +222,7 @@
     border: 1px solid black;
     border-radius: 2px;
 
-    z-index: 999;
+    z-index: 9999;
 
     padding: 4px 8px;
     cursor: pointer;
@@ -245,7 +245,7 @@
     border: 1px solid black;
     border-radius: 2px;
 
-    z-index: 999;
+    z-index: 9999;
 
     padding: 4px 8px;
     cursor: pointer;
