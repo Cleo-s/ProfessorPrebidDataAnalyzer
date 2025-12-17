@@ -11,7 +11,7 @@ export async function analyzePrebidSnap(snapshot: PrebidSnap): Promise<PrebidAna
     const systemText = 
     `Ти експерт з adtech, Prebid.js та header bidding.
     Твоє завдання — проаналізувати дані з Prebid Professor (логи та конфігурація слотів),
-    виявити проблеми й дати рекомендації. Відповідай українською мовою.
+    виявити проблеми й дати рекомендації. Відповідай англійською мовою.
     `
 
     if(userText.length > 8000)

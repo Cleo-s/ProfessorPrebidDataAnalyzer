@@ -72,10 +72,9 @@ export function initPanel(): HTMLElement {
                 
                 responseInfo.style.fontSize = '14px';
                 responseInfo.textContent = '';
-                responseInfo.textContent = response.fullRes;
 
-                console.log(response);
-                
+                responseInfo.textContent = response.fullRes.slice(0, 500);
+
             } catch (error) {
                 console.error('Error during analysis. Check backend or network', error);
             }
