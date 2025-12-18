@@ -15,7 +15,7 @@ export const PREBID_ANALYZER_CSS = `
 
     background-color: rgba(255, 255, 255, 0.95);
 
-    height: 750px;
+    height: 900px;
     width: 650px;
 
     z-index: 9999;
@@ -80,6 +80,7 @@ export const PREBID_ANALYZER_CSS = `
     width: 600px;
 
     z-index: 9999;
+    padding: 12px 2px 4px 2px;
 }
 
 .prebid-close-main-div-button {

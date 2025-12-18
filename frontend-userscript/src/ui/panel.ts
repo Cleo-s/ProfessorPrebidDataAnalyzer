@@ -70,10 +70,9 @@ export function initPanel(): HTMLElement {
             try {
                 const response = await analyzePrebid(snapShot);
                 
-                responseInfo.style.fontSize = '14px';
                 responseInfo.textContent = '';
 
-                responseInfo.textContent = response.fullRes.slice(0, 2500);
+                responseInfo.textContent = response.fullRes.slice(0, 1500);
 
             } catch (error) {
                 console.error('Error during analysis. Check backend or network', error);
