@@ -9,9 +9,10 @@ export async function analyzePrebidSnap(snapshot: PrebidSnap): Promise<PrebidAna
 
     let userText = JSON.stringify(snapshot);
     const systemText = 
-    `Ти експерт з adtech, Prebid.js та header bidding.
-    Твоє завдання — проаналізувати дані з Prebid Professor (логи та конфігурація слотів),
-    виявити проблеми й дати рекомендації. Відповідай англійською мовою.
+    `
+        привіт, проведи будь ласка короткий аналіз логів,
+        відповідай українською мовою.
+        Відповідь має містити в собі не більше 300 слів. Це важливо!
     `
 
     if(userText.length > 8000)

@@ -346,7 +346,7 @@
         try {
           const response = await analyzePrebid(snapShot);
           responseInfo.textContent = "";
-          responseInfo.textContent = response.fullRes.slice(0, 1500);
+          responseInfo.textContent = response.fullRes;
         } catch (error) {
           console.error("Error during analysis. Check backend or network", error);
         }
