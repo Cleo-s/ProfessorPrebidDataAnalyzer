@@ -15,8 +15,10 @@ export const PREBID_ANALYZER_CSS = `
 
     background-color: rgba(255, 255, 255, 0.95);
 
-    height: 900px;
-    width: 650px;
+    height: 90%;
+    max-height: 900px;
+    width: 90%;
+    max-width: 650px;
 
     z-index: 9999;
 }
@@ -66,8 +68,6 @@ export const PREBID_ANALYZER_CSS = `
 
 .prebid-analyzer-response-div {
     display: flex;
-    align-items: center;
-    justify-content: center;
     overflow-wrap: break-word;
 
     white-space: pre-line;
@@ -130,5 +130,10 @@ export const PREBID_ANALYZER_CSS = `
 
 .prebid-open-main-div-button:hover {
     background-color: rgba(180, 180, 180, 0.4);
+}
+
+.prebid-span-text {
+    position: relative;
+    top: 300px;
 }
 `

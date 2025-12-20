@@ -5,4 +5,5 @@ export const ids = {
    prebidCloseMainDivButton: 'prebid-close-main-div-button',
    prebidClosedDiv: 'prebid-closed-div',
    prebidOpenMainDivButton: 'prebid-open-main-div-button',
+   prebidSpanText: 'prebid-span-text',
 }

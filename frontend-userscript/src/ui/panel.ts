@@ -16,6 +16,7 @@ export function initPanel(): HTMLElement {
     const closeBtn = document.createElement('button') as HTMLButtonElement;
     const closedDiv = document.createElement('div') as HTMLDivElement;
     const openBtn = document.createElement('button') as HTMLButtonElement;
+    const statusText = document.createElement('span') as HTMLSpanElement; 
 
     const styleEl = document.createElement('style');
     styleEl.id = 'prebid-analyzer-styles';
@@ -53,24 +54,27 @@ export function initPanel(): HTMLElement {
     if (!isResponseDivPresent) {
         responseInfo.classList.add(ids.prebidAnalyzerResponsiveDiv);
         
-        responseInfo.textContent = 'Waiting for Analysys'
-        
+        statusText.textContent = 'Waiting for Analysys'
+        statusText.classList.add(ids.prebidSpanText);
+
+        mainDiv.appendChild(statusText);
         mainDiv.appendChild(responseInfo);
     }
 
     if (!isBtnPresent) { 
-    analyzeBtn.textContent = 'Провести Аналіз Даних';
+        analyzeBtn.textContent = 'Провести Аналіз Даних';
         analyzeBtn.classList.add(ids.prebidAnalyzerButton);
+
         analyzeBtn.addEventListener('click', async (e) => {
-            responseInfo.textContent = 'Collecting Prebid Data...';
+            statusText.textContent = 'Collecting Prebid Data...';
 
             const snapShot = prebidDataCollector();
-            responseInfo.textContent = 'Sending Data to backend analyzer...';
+            statusText.textContent = 'Sending Data to backend analyzer...';
 
             try {
                 const response = await analyzePrebid(snapShot);
                 
-                responseInfo.textContent = '';
+                statusText.style.display = 'none';
 
                 responseInfo.textContent = response.fullRes
 

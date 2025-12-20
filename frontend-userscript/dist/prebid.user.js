@@ -144,8 +144,10 @@
 
     background-color: rgba(255, 255, 255, 0.95);
 
-    height: 900px;
-    width: 650px;
+    height: 90%;
+    max-height: 900px;
+    width: 90%;
+    max-width: 650px;
 
     z-index: 9999;
 }
@@ -195,8 +197,6 @@
 
 .prebid-analyzer-response-div {
     display: flex;
-    align-items: center;
-    justify-content: center;
     overflow-wrap: break-word;
 
     white-space: pre-line;
@@ -260,6 +260,11 @@
 .prebid-open-main-div-button:hover {
     background-color: rgba(180, 180, 180, 0.4);
 }
+
+.prebid-span-text {
+    position: relative;
+    top: 300px;
+}
 `;
 
   // src/api/config.ts
@@ -292,7 +297,8 @@
     prebidAnalyzerResponsiveDiv: "prebid-analyzer-response-div",
     prebidCloseMainDivButton: "prebid-close-main-div-button",
     prebidClosedDiv: "prebid-closed-div",
-    prebidOpenMainDivButton: "prebid-open-main-div-button"
+    prebidOpenMainDivButton: "prebid-open-main-div-button",
+    prebidSpanText: "prebid-span-text"
   };
 
   // src/ui/panel.ts
@@ -306,6 +312,7 @@
     const closeBtn = document.createElement("button");
     const closedDiv = document.createElement("div");
     const openBtn = document.createElement("button");
+    const statusText = document.createElement("span");
     const styleEl = document.createElement("style");
     styleEl.id = "prebid-analyzer-styles";
     styleEl.textContent = PREBID_ANALYZER_CSS;
@@ -333,19 +340,21 @@
     });
     if (!isResponseDivPresent) {
       responseInfo.classList.add(ids.prebidAnalyzerResponsiveDiv);
-      responseInfo.textContent = "Waiting for Analysys";
+      statusText.textContent = "Waiting for Analysys";
+      statusText.classList.add(ids.prebidSpanText);
+      mainDiv.appendChild(statusText);
       mainDiv.appendChild(responseInfo);
     }
     if (!isBtnPresent) {
       analyzeBtn.textContent = "\u041F\u0440\u043E\u0432\u0435\u0441\u0442\u0438 \u0410\u043D\u0430\u043B\u0456\u0437 \u0414\u0430\u043D\u0438\u0445";
       analyzeBtn.classList.add(ids.prebidAnalyzerButton);
       analyzeBtn.addEventListener("click", async (e) => {
-        responseInfo.textContent = "Collecting Prebid Data...";
+        statusText.textContent = "Collecting Prebid Data...";
         const snapShot = prebidDataCollector();
-        responseInfo.textContent = "Sending Data to backend analyzer...";
+        statusText.textContent = "Sending Data to backend analyzer...";
         try {
           const response = await analyzePrebid(snapShot);
-          responseInfo.textContent = "";
+          statusText.style.display = "none";
           responseInfo.textContent = response.fullRes;
         } catch (error) {
           console.error("Error during analysis. Check backend or network", error);
