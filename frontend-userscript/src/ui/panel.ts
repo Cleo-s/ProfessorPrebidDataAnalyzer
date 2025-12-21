@@ -4,7 +4,6 @@ import { analyzePrebid} from '../api/client';
 import { ids } from '../data/ids';
 
 export function initPanel(): HTMLElement {
-    //injectStyles();
 
     const isBtnPresent = document.getElementById(ids.prebidAnalyzerButton) as HTMLButtonElement;
     const isDivPresent = document.getElementById(ids.prebidAnalyzerDiv) as HTMLDialogElement;
