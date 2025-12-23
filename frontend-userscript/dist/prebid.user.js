@@ -355,6 +355,9 @@
         try {
           const response = await analyzePrebid(snapShot);
           statusText.style.display = "none";
+          if (!response) {
+            responseInfo.textContent = "Something went wrong, try again!";
+          }
           responseInfo.textContent = response.fullRes;
         } catch (error) {
           console.error("Error during analysis. Check backend or network", error);
