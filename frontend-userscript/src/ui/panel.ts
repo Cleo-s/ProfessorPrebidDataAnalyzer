@@ -76,7 +76,7 @@ export function initPanel(): HTMLElement {
                 statusText.style.display = 'none';
 
                 if (!response) {
-                    responseInfo.textContent = 'Something went wrong, try again!'
+                    responseInfo.textContent = 'Something went wrong, try again!';
                 }
 
                 responseInfo.textContent = response.fullRes
